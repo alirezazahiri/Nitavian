@@ -1,12 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 class Login extends React.Component {
 
-    handleLogin(e) {
-        /* implement the axios... send JSON to http://localhost:8000/accounts/login */
-        console.log("handleLogin fired!")
+    state = {
+        fields:{
+            username: '',
+            password: ''
+        },
+        show: false
+    }
+
+    handleLogin() {
+        /* implement the method... send JSON to http://localhost:8000/accounts/login */
+        axios.post('http://localhost:8000/accounts/login/', {
+          username: this.state.fields.username,
+          password: this.state.fields.password
+        })
+          .then((response) => {
+            console.log(response.data.token)
+            window.localStorage.setItem('token', response.data.token)
+            this.props.history.push('/dashboard')
+          })
+          .catch((error) => {
+            console.log(error)
+            this.setState({ show: true })
+          })
+    }
+
+    handleChange(e) {
+        const name = e.target.name
+        const changeFields = this.state.fields
+        changeFields[name] = e.target.value
+        this.setState({ fields: changeFields })
+        console.log(this.state)
     }
 
     render() {
@@ -20,6 +49,8 @@ class Login extends React.Component {
                             className="block w-full text-white p-3 rounded mb-4"
                             name="username"
                             placeholder="Username" 
+                            id="username"
+                            onChange={(event) => this.handleChange(event)}
                             />
 
                         <input 
@@ -27,6 +58,8 @@ class Login extends React.Component {
                             className="block w-full text-white p-3 rounded mb-4"
                             name="password"
                             placeholder="Password"
+                            id="password"
+                            onChange={(event) => this.handleChange(event)}
                         />
 
                         <button
@@ -39,9 +72,9 @@ class Login extends React.Component {
 
                     <div id="suggest" className="text-grey-dark mt-6 animate-bounce">
                         Don't Have an Account?
-                        <a className="no-underline border-b border-blue text-gray-100 hover:text-blue-300" href="/register">
+                        <Link className="no-underline border-b border-blue text-gray-100 hover:text-blue-300" to="/register">
                             Create One!
-                        </a>.
+                        </Link>.
                     </div>
                 </div>
             </Container>
