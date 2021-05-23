@@ -10,7 +10,6 @@ import Dashboard from './components/Dashboard';
 const App = () => {
   return (
     <Router>
-      <NavBar />
       <Switch>
         <Route path="/" component={Home} exact></Route>
         <Route path="/register" component={Register}></Route>

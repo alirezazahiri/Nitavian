@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import NavBar from './Navbar'
 
 class Login extends React.Component {
 
@@ -9,7 +10,8 @@ class Login extends React.Component {
         fields:{
             username: '',
             password: ''
-        }
+        },
+        isLoggedIn: false
     }
 
     handleLogin(e) {
@@ -20,11 +22,14 @@ class Login extends React.Component {
             password: this.state.fields.password
         })
             .then((response) => {
+                document.getElementById('password').style.border = '1px solid rgba(0, 255, 0, 0.5)'
                 window.localStorage.setItem('token', response.data.token)
                 this.props.history.push('/dashboard')
+                this.setState({ isLoggedIn: true })
             })
             .catch((error) => {
                 console.log(error)
+                document.getElementById('password').style.border = '1px solid rgba(255, 0, 0, 0.5)'
             })
     }
 
@@ -35,9 +40,17 @@ class Login extends React.Component {
         this.setState({ fields: changeFields })
     }
 
+    path_to() {
+        if(this.state.isLoggedIn) {
+            return "/dashboard"
+        }
+        return "/"
+    }
+
     render() {
         return(
             <Container className="bg-grey-lighter min-h-screen flex flex-col">
+                <NavBar path_to={this.path_to()}/>
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div  id="signup" className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center text-blue-600">Sign in</h1>

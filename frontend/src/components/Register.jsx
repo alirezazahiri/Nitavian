@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import NavBar from './Navbar'
 
 class Register extends React.Component {
 
@@ -38,6 +39,7 @@ class Register extends React.Component {
                         .then((response) => {
                             window.localStorage.setItem('token', response.data.token)
                             this.props.history.push('/dashboard')
+                            this.setState({ isLoggedIn: true })
                         })
                         .catch((error) => {
                             console.log(error)
@@ -60,9 +62,17 @@ class Register extends React.Component {
         this.setState({ fields: changeFields })
     }
 
+    path_to() {
+        if(this.state.isLoggedIn) {
+            return "/dashboard"
+        }
+        return "/"
+    }
+
     render(){
         return(
             <Container className="bg-grey-lighter min-h-screen flex flex-col">
+                <NavBar path_to={this.path_to()}/>
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div  id="signup" className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center text-blue-600">Sign up</h1>

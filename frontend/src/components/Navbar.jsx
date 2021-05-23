@@ -2,6 +2,14 @@ import { NavLink, Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const NavBar = (props) => {
+
+    const fillName = () => {
+        if(props.path_to === "/dashboard") {
+            return "Dashboard"
+        }
+        return "Home"
+    }
+
     return(
         <Container className="sticky top-0">
             <Nav className="sticky top-0">
@@ -18,7 +26,7 @@ const NavBar = (props) => {
                     </div>
                         <div className="hidden sm:block sm:ml-6">
                                 <div className="flex space-x-4">
-                                    <NavLink to="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</NavLink>
+                                    <NavLink to={props.path_to} className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">{fillName()}</NavLink>
                                     <NavLink to="/register" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</NavLink>
                                     <NavLink to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</NavLink>
                                 </div>
@@ -29,7 +37,7 @@ const NavBar = (props) => {
 
                 <div className="sm:hidden" id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1">
-                        <NavLink to="/" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</NavLink>
+                        <NavLink to={props.path_to} className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">{props.path_to}</NavLink>
                         <NavLink to="/register" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Register</NavLink>
                         <NavLink to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">login</NavLink>
                     </div>
