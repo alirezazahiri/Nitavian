@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-
 class Register extends React.Component {
 
     state = {
@@ -22,39 +21,38 @@ class Register extends React.Component {
         console.log(this.state)
         const pass1 = this.state.fields.password1
         const pass2 = this.state.fields.password2
-        var token = window.localStorage.getItem('token')
-        if(pass1 === pass2) {
-        axios.post('http://localhost:8000/accounts/register', {
-            username: this.state.fields.username,
-            email: this.state.fields.email,
-            password: this.state.fields.password1,
-            headers: {
-                'Authorization': `Token ${token}`
-            }
-        })
-            .then((response) => {
-                console.log(response.data)
-                axios.post('http://localhost:8000/accounts/login', {
-                    username: this.state.fields.username,
-                    password: this.state.fields.password1
-                })
-                    .then((response) => {
-                        console.log('signup token', response.data.token)
-                        window.localStorage.setItem('token', response.data.token)
-                        this.setState({show: true})
 
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.setState({alertShow: true})
-                    })
-            })
-            .catch((error) => {
-                console.log(error)
-                this.setState({alertShow: true})
-            });
+        if(pass1 === pass2 && pass1.length >= 6) {
+            document.getElementById('password1').style.border = '1px solid rgba(0, 255, 0, 0.5)'
+            document.getElementById('password2').style.border = '1px solid rgba(0, 255, 0, 0.5)'
+        // axios.post('http://localhost:8000/accounts/register', {
+        //     username: this.state.fields.username,
+        //     email: this.state.fields.email,
+        //     password: this.state.fields.password1,
+        // })
+        //     .then((response) => {
+        //         console.log(response.data)
+        //         axios.post('http://localhost:8000/accounts/login', {
+        //             username: this.state.fields.username,
+        //             password: this.state.fields.password1
+        //         })
+        //             .then((response) => {
+        //                 console.log('signup token', response.data.token)
+        //                 window.localStorage.setItem('token', response.data.token)
+        //                 this.setState({show: true})
+        //             })
+        //             .catch((error) => {
+        //                 console.log(error)
+        //                 this.setState({alertShow: true})
+        //             })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //         this.setState({alertShow: true})
+        //     });
         }else {
-            console.log("passwords don't match")
+            document.getElementById('password1').style.border = '1px solid rgba(255, 0, 0, 0.5)'
+            document.getElementById('password2').style.border = '1px solid rgba(255, 0, 0, 0.5)'
         }
     }
 
@@ -73,6 +71,7 @@ class Register extends React.Component {
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div  id="signup" className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center text-blue-600">Sign up</h1>
+                        <form>
                         <input 
                             id="username"
                             type="text"
@@ -113,7 +112,7 @@ class Register extends React.Component {
                             id="create-account"
                             onClick={() => this.handleCreateAccount()}
                         >Create Account</button>
-
+                        </form>
                         <div id="terms-privacy" className="text-center text-sm text-grey-dark mt-4">
                             By signing up, you agree to the 
                             <a className="border-b border-gray-600 text-gray-800 hover:text-gray-500" href="#">
