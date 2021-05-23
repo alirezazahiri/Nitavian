@@ -9,25 +9,23 @@ class Login extends React.Component {
         fields:{
             username: '',
             password: ''
-        },
-        show: false
+        }
     }
 
-    handleLogin() {
+    handleLogin(e) {
+        e.preventDefault()
         /* implement the method... send JSON to http://localhost:8000/accounts/login */
         axios.post('http://localhost:8000/accounts/login/', {
-          username: this.state.fields.username,
-          password: this.state.fields.password
+            username: this.state.fields.username,
+            password: this.state.fields.password
         })
-          .then((response) => {
-            console.log(response.data.token)
-            window.localStorage.setItem('token', response.data.token)
-            this.props.history.push('/dashboard')
-          })
-          .catch((error) => {
-            console.log(error)
-            this.setState({ show: true })
-          })
+            .then((response) => {
+                window.localStorage.setItem('token', response.data.token)
+                this.props.history.push('/dashboard')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     handleChange(e) {
@@ -35,7 +33,6 @@ class Login extends React.Component {
         const changeFields = this.state.fields
         changeFields[name] = e.target.value
         this.setState({ fields: changeFields })
-        console.log(this.state)
     }
 
     render() {
@@ -44,6 +41,7 @@ class Login extends React.Component {
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div  id="signup" className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center text-blue-600">Sign in</h1>
+                        <form>
                         <input 
                             type="text"
                             className="block w-full text-white p-3 rounded mb-4"
@@ -66,8 +64,9 @@ class Login extends React.Component {
                             type="submit"
                             className="w-full text-center py-3 rounded bg-blue-800 text-white hover:bg-blue-600 focus:outline-none my-1"
                             id="create-account"
-                            onClick={this.handleLogin}
+                            onClick={(e) => this.handleLogin(e)}
                         >Login</button>
+                        </form>
                     </div>
 
                     <div id="suggest" className="text-grey-dark mt-6 animate-bounce">

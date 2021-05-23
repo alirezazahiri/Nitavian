@@ -1,0 +1,11 @@
+asgiref
+Django
+django-cors-headers
+django-extensions
+djangorestframework
+Markdown
+pydot
+pyparsing
+pytz
+six
+sqlparse

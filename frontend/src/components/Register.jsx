@@ -11,45 +11,41 @@ class Register extends React.Component {
             email: '',
             password1: '',
             password2: '',
-        },
-        show: false,
-        alertShow: false,
+        }
     }
 
-    handleCreateAccount() {
+    handleCreateAccount(e) {
+        e.preventDefault()
         /* implement the axios... send JSON to http://localhost:8000/accounts/register */
-        console.log(this.state)
+        
         const pass1 = this.state.fields.password1
         const pass2 = this.state.fields.password2
 
         if(pass1 === pass2 && pass1.length >= 6) {
             document.getElementById('password1').style.border = '1px solid rgba(0, 255, 0, 0.5)'
             document.getElementById('password2').style.border = '1px solid rgba(0, 255, 0, 0.5)'
-        // axios.post('http://localhost:8000/accounts/register', {
-        //     username: this.state.fields.username,
-        //     email: this.state.fields.email,
-        //     password: this.state.fields.password1,
-        // })
-        //     .then((response) => {
-        //         console.log(response.data)
-        //         axios.post('http://localhost:8000/accounts/login', {
-        //             username: this.state.fields.username,
-        //             password: this.state.fields.password1
-        //         })
-        //             .then((response) => {
-        //                 console.log('signup token', response.data.token)
-        //                 window.localStorage.setItem('token', response.data.token)
-        //                 this.setState({show: true})
-        //             })
-        //             .catch((error) => {
-        //                 console.log(error)
-        //                 this.setState({alertShow: true})
-        //             })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //         this.setState({alertShow: true})
-        //     });
+            axios.post('http://localhost:8000/accounts/register/', {
+                username: this.state.fields.username,
+                password: pass1,
+                email: this.state.fields.email
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    axios.post('http://localhost:8000/accounts/login/', {
+                        username: this.state.fields.username,
+                        password: pass1
+                    })
+                        .then((response) => {
+                            window.localStorage.setItem('token', response.data.token)
+                            this.props.history.push('/dashboard')
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }else {
             document.getElementById('password1').style.border = '1px solid rgba(255, 0, 0, 0.5)'
             document.getElementById('password2').style.border = '1px solid rgba(255, 0, 0, 0.5)'
@@ -62,7 +58,6 @@ class Register extends React.Component {
         const changeFields = this.state.fields
         changeFields[name] = e.target.value
         this.setState({ fields: changeFields })
-        console.log(this.state)
     }
 
     render(){
@@ -110,7 +105,7 @@ class Register extends React.Component {
                             type="submit"
                             className="w-full text-center py-3 rounded bg-blue-800 text-white hover:bg-blue-600 focus:outline-none my-1"
                             id="create-account"
-                            onClick={() => this.handleCreateAccount()}
+                            onClick={(e) => this.handleCreateAccount(e)}
                         >Create Account</button>
                         </form>
                         <div id="terms-privacy" className="text-center text-sm text-grey-dark mt-4">
