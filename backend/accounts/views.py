@@ -16,3 +16,18 @@ class LogoutAPIView(APIView):
 
 class UserRegistration(generics.CreateAPIView):
     serializer_class = UserSerializer
+
+class Profile(APIView):
+    permission_classes = (IsAuthenticated, )
+    
+    def get(self, request):
+        user = request.user
+        return Response(data={'username': user.username, 'email': user.email})
+    
+    def put(self, request):
+        user = request.user
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.password = request.POST.get('password')
+        user.save()
+        return Response(data={'message': f"{user.username}'s Profile Updated!"})

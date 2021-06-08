@@ -8,12 +8,28 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavBar />    
-                Profile
-            </div>
+            <Container>
+                <NavBar path_to='/dashboard'/>    
+                <Title>Profile</Title>
+            </Container>
         )
     }
 }
+
+const Container = styled.div`
+    background: #c31432;  
+    background: -webkit-linear-gradient(to right, #240b36, #c31432);  
+    background: linear-gradient(to right, #240b36, #c31432); 
+    min-height: 100vh;
+`
+
+const Title = styled.h1`
+    margin-top: 20px;
+    color: #c8c2bc;
+    font-family: 'Podkova', serif;
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+`
 
 export default Profile

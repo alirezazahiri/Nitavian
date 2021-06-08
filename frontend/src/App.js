@@ -7,6 +7,9 @@ import Login from './components/Login.jsx'
 import NavBar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
+import Barracks from './components/Barracks';
+import GoldMine from './components/GoldMine';
+import Notifications from './components/Notifications';
 
 const App = () => {
   return (
@@ -17,9 +20,9 @@ const App = () => {
         <Route path="/login" component={Login}></Route>
         <Route path="/dashboard" component={Dashboard}></Route>
         <Route path="/profile" component={Profile}></Route>
-        <Route path="/barracks" component={Profile}></Route>
-        <Route path="/gold-mine" component={Profile}></Route>
-        <Route path="/notifications" component={Profile}></Route>
+        <Route path="/barracks" component={Barracks}></Route>
+        <Route path="/gold-mine" component={GoldMine}></Route>
+        <Route path="/notifications" component={Notifications}></Route>
       </Switch>
     </Router>
   )

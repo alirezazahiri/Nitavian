@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import NavBar from './Navbar'
 
-class Barracks extends React.Component {
+class Notification extends React.Component {
 
     render() {
         return (
             <Container>
                 <NavBar path_to='/dashboard'/>    
-                <Title>Barracks</Title>
+                <Title>Notification</Title>
             </Container>
         )
     }
@@ -32,4 +32,4 @@ const Title = styled.h1`
     text-align: center;
 `
 
-export default Barracks
+export default Notification
