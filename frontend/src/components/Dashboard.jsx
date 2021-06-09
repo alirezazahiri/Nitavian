@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
 import NavBar from './Navbar'
 import Card from './Card'
+import axios from 'axios'
 
 const Dashboard = (props) => {
     return (
         <Container>
-            <NavBar path_to="/dashboard" link="/profile"/>
+            <NavBar path_to="/dashboard" link=""/>
             <Card name="Barracks" path="/barracks" quote="Train Some Soldiers..." src="/img/barracks.png"/>
             <Card name="Gold Mine" path="/gold-mine" quote="See How Much Golds You've Got" src="/img/gold-mine.png"/>
             <Card name="Notifications" path="/notifications" quote="What's Up" src="/img/notification.png"/>

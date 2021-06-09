@@ -16,14 +16,18 @@ class Login extends React.Component {
 
     handleLogin(e) {
         e.preventDefault()
+
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem('token')}`
+        }
         /* implement the method... send JSON to http://localhost:8000/accounts/login */
         axios.post('http://localhost:8000/accounts/login/', {
             username: this.state.fields.username,
-            password: this.state.fields.password
+            password: this.state.fields.password,
         })
             .then((response) => {
                 document.getElementById('password').style.border = '1px solid rgba(0, 255, 0, 0.5)'
-                window.localStorage.setItem('token', response.data.token)
                 this.props.history.push('/dashboard')
                 this.setState({ isLoggedIn: true })
             })
