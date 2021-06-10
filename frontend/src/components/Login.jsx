@@ -28,6 +28,11 @@ class Login extends React.Component {
             password: this.state.fields.password
         })
         .then((response) => {
+            document.getElementById('password').style.border = '1px solid rgba(0, 255, 0, 0.5)'
+            localStorage.setItem('notifs', JSON.stringify([]))
+            let list = JSON.parse(localStorage.getItem('notifs'))
+            list.push('User Logged In Successfully!')
+            localStorage.setItem('notifs', JSON.stringify(list))
             console.log(response)
             localStorage.setItem('token', response.data.token)
             this.props.history.push('/dashboard')
@@ -43,6 +48,7 @@ class Login extends React.Component {
             })
         })
         .catch((error) => {
+            document.getElementById('password').style.border = '1px solid rgba(255, 0, 0, 0.5)'
             console.error(error)
         })
     }

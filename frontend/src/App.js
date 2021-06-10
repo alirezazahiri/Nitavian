@@ -4,21 +4,27 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './components/Home.jsx'
 import Register from './components/Register.jsx'
 import Login from './components/Login.jsx'
-import NavBar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Barracks from './components/Barracks';
 import GoldMine from './components/GoldMine';
 import Notifications from './components/Notifications';
 
-const App = () => {
+const App = (props) => {
+
+  const requireAuth = () => {
+    if(localStorage.getItem('token') === ''){
+      props.history.push('/')
+    }
+  }
+
   return (
     <Router>
       <Switch>
         <Route path="/" component={Home} exact></Route>
         <Route path="/register" component={Register}></Route>
         <Route path="/login" component={Login}></Route>
-        <Route path="/dashboard" component={Dashboard}></Route>
+        <Route path="/dashboard" component={Dashboard} onEnter={() => console.log('Entered!')}></Route>
         <Route path="/profile" component={Profile}></Route>
         <Route path="/barracks" component={Barracks}></Route>
         <Route path="/gold-mine" component={GoldMine}></Route>

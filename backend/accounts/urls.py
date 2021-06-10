@@ -12,5 +12,5 @@ urlpatterns = [
     path('gold_dec/', GoldX.as_view()), 
     path('swordmen_get/', SwordMen.as_view()),
     path('swordmen_inc/', SwordMen.as_view()),
-    path('swordmen_dec/', SwordMenX.as_view())
+    path('swordmen_dec/', SwordMenX.as_view()),
 ]

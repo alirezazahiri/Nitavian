@@ -35,6 +35,9 @@ class Barracks extends React.Component {
                         this.decreaseCoin()
                         this.setState({swordmen: res.data.swordmen})
                         localStorage.setItem('swordmen', res.data.swordmen)
+                        let list = JSON.parse(localStorage.getItem('notifs'))
+                        list.push(res.data.message)
+                        localStorage.setItem('notifs', JSON.stringify(list))
                     }
             })
             .catch((error) => {

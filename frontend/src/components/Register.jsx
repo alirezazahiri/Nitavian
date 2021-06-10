@@ -24,6 +24,12 @@ class Register extends React.Component {
         if(pass1 === pass2 && pass1.length >= 6) {
             document.getElementById('password1').style.border = '1px solid rgba(0, 255, 0, 0.5)'
             document.getElementById('password2').style.border = '1px solid rgba(0, 255, 0, 0.5)'
+            
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: ''
+            }
+
             axios.post('http://localhost:8000/accounts/register/', {
                 username: this.state.fields.username,
                 password: pass1,
@@ -38,6 +44,10 @@ class Register extends React.Component {
                 .then((response) => {
                     console.log(response)
                     localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('notifs', JSON.stringify([]))
+                    let list = JSON.parse(localStorage.getItem('notifs'))
+                    list.push('User Registered Successfully!')
+                    localStorage.setItem('notifs', JSON.stringify(list))
                     this.props.history.push('/dashboard')
                     axios.defaults.headers = {
                         "Content-Type": "application/json",
@@ -49,6 +59,8 @@ class Register extends React.Component {
                         localStorage.setItem('coins', response.data.gold)
                         localStorage.setItem('swordmen', response.data.swordmen)
                     })
+
+                    
                 })
                 .catch((error) => {
                     console.error(error)

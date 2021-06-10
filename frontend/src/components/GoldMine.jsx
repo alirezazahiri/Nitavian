@@ -18,8 +18,11 @@ class GoldMine extends React.Component {
         axios.post('http://localhost:8000/accounts/gold_inc/',
             {isAuthenticated: true})
                 .then((res) => {
+                    console.log(res.data)
                     this.setState({coins: res.data.gold})
-                    localStorage.setItem('coins', res.data.gold)
+                    let list = JSON.parse(localStorage.getItem('notifs'))
+                    list.push(res.data.message)
+                    localStorage.setItem('notifs', JSON.stringify(list))
             })
             .catch((error) => {
                 console.error(error)
