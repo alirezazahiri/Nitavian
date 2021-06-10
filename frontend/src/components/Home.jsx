@@ -5,7 +5,7 @@ import NavBar from './Navbar'
 const Home = (props) => {
     return (
         <Container className="h-screen">
-            <NavBar path_to="/"/>
+            <NavBar path_to="/" inOrOut="/login"/>
             <Content>
                 <Title>Welcome To Nitavian</Title>
                 <Description>

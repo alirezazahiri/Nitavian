@@ -7,7 +7,7 @@ import axios from 'axios'
 const Dashboard = (props) => {
     return (
         <Container>
-            <NavBar path_to="/dashboard" link=""/>
+            <NavBar path_to="/dashboard" link="" inOrOut="/"/>
             <Card name="Barracks" path="/barracks" quote="Train Some Soldiers..." src="/img/barracks.png"/>
             <Card name="Gold Mine" path="/gold-mine" quote="See How Much Golds You've Got" src="/img/gold-mine.png"/>
             <Card name="Notifications" path="/notifications" quote="What's Up" src="/img/notification.png"/>

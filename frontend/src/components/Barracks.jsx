@@ -60,7 +60,7 @@ class Barracks extends React.Component {
     render() {
         return (
             <Container>
-                <NavBar path_to='/dashboard'/> 
+                <NavBar path_to='/dashboard' inOrOut="/" link="/notifications"/> 
                 <Title>Barracks</Title>
                 <Content>
                     <div>

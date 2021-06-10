@@ -8,7 +8,7 @@ class Notification extends React.Component {
     render() {
         return (
             <Container>
-                <NavBar path_to='/dashboard'/>    
+                <NavBar path_to='/dashboard' inOrOut="/" link="/barracks" link2="/gold-mine"/>    
                 <Title>Notification</Title>
             </Container>
         )

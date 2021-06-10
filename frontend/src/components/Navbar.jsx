@@ -1,5 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const NavBar = (props) => {
 
@@ -8,6 +9,43 @@ const NavBar = (props) => {
             return "Dashboard"
         }
         return "Home"
+    }
+
+    const fillLog = () => {
+        if(props.inOrOut === "/login") {
+            return "Login"
+        }
+        return "Logout"
+    }
+
+    const handleLogout = () => {
+        if(props.inOrOut === '/'){
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            }
+            
+            axios.post('http://localhost:8000/accounts/logout/', {isAuthenticated: true})
+            .then((response) => {
+                props.history.push('/')
+                console.log(response.data)
+            })
+            .catch((e) => {
+                console.error(e)
+            })
+
+            localStorage.clear()
+        }
+    }
+
+    const getName = (link) => {
+        if(link === '/barracks'){
+            return 'Barracks'
+        }else if(link === '/gold-mine'){
+            return 'Gold Mine'
+        }else{
+            return 'Notifications'
+        }
     }
 
     return(
@@ -28,8 +66,9 @@ const NavBar = (props) => {
                                 <div className="flex space-x-4">
                                     <NavLink to={props.path_to} className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">{fillName()}</NavLink>
                                     <NavLink to="/register" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</NavLink>
-                                    <NavLink to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</NavLink>
-                                    {!!props.link ? <NavLink to={props.link} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</NavLink> : ''}
+                                    <NavLink to={props.inOrOut} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={() => handleLogout()}>{fillLog()}</NavLink>
+                                    {!!props.link ? <NavLink to={props.link} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{getName(props.link)}</NavLink> : ''}
+                                    {!!props.link2 ? <NavLink to={props.link2} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{getName(props.link2)}</NavLink> : ''}
                                 </div>
                         </div>
                     </div>
@@ -40,8 +79,9 @@ const NavBar = (props) => {
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <NavLink to={props.path_to} className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">{fillName()}</NavLink>
                         <NavLink to="/register" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Register</NavLink>
-                        <NavLink to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">login</NavLink>
-                        {!!props.link ? <NavLink to={props.link} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</NavLink> : ''}
+                        <NavLink to={props.inOrOut} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{fillLog()}</NavLink>
+                        {!!props.link ? <NavLink to={props.link} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{getName(props.link)}</NavLink> : ''}
+                        {!!props.link2 ? <NavLink to={props.link2} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{getName(props.link2)}</NavLink> : ''}
                     </div>
                 </div>
             </Nav>

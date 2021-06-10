@@ -9,7 +9,7 @@ class Profile extends React.Component {
     render() {
         return (
             <Container>
-                <NavBar path_to='/dashboard'/>    
+                <NavBar path_to='/dashboard' inOrOut="/"/>    
                 <Title>Profile</Title>
             </Container>
         )

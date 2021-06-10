@@ -16,9 +16,8 @@ class Register extends React.Component {
     }
 
     handleCreateAccount(e) {
+        localStorage.clear()
         e.preventDefault()
-        /* implement the axios... send JSON to http://localhost:8000/accounts/register */
-        
         const pass1 = this.state.fields.password1
         const pass2 = this.state.fields.password2
 
@@ -30,24 +29,34 @@ class Register extends React.Component {
                 password: pass1,
                 email: this.state.fields.email
             })
+            .then((response) => {
+                console.log(response)
+                axios.post('http://localhost:8000/accounts/login/', {
+                    username: this.state.fields.username,
+                    password: pass1
+                })
                 .then((response) => {
-                    console.log(response.data)
-                    axios.post('http://localhost:8000/accounts/login/', {
-                        username: this.state.fields.username,
-                        password: pass1
+                    console.log(response)
+                    localStorage.setItem('token', response.data.token)
+                    this.props.history.push('/dashboard')
+                    axios.defaults.headers = {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${localStorage.getItem('token')}`
+                    }
+                    axios.get('http://localhost:8000/accounts/get-info/')
+                    .then((response) => {
+                        console.log(response)
+                        localStorage.setItem('coins', response.data.gold)
+                        localStorage.setItem('swordmen', response.data.swordmen)
                     })
-                        .then((response) => {
-                            window.localStorage.setItem('token', response.data.token)
-                            this.props.history.push('/dashboard')
-                            this.setState({ isLoggedIn: true })
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.error(error)
                 })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
         }else {
             document.getElementById('password1').style.border = '1px solid rgba(255, 0, 0, 0.5)'
             document.getElementById('password2').style.border = '1px solid rgba(255, 0, 0, 0.5)'
@@ -72,7 +81,7 @@ class Register extends React.Component {
     render(){
         return(
             <Container className="bg-grey-lighter min-h-screen flex flex-col">
-                <NavBar path_to={this.path_to()}/>
+                <NavBar path_to={this.path_to()} inOrOut="/login"/>
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <div  id="signup" className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center text-blue-600">Sign up</h1>
@@ -84,7 +93,7 @@ class Register extends React.Component {
                             name="username"
                             placeholder="Username" 
                             onChange={(event) => this.handleChange(event)}
-                            />
+                        />
 
                         <input 
                             id="email"

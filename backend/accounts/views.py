@@ -30,7 +30,7 @@ class Gold(APIView):
     def post(self, request):
             user = request.user
             try:
-                user.gold = 0
+                user.gold += 100
                 user.save()
                 return Response({'message': f"{user.username}'s coins increased to {user.gold}", 'gold': user.gold})
             except user.DoesNotExist:
@@ -48,9 +48,12 @@ class SwordMen(APIView):
     def post(self, request):
             user = request.user
             try:
-                user.swordmen = 0
-                user.save()
-                return Response({'message': f"{user.username}'s swordmen increased to {user.swordmen}", 'swordmen': user.swordmen, 'gold': user.gold})
+                if user.gold != 0:
+                    user.swordmen += 1
+                    user.save()
+                    return Response({'message': f"{user.username}'s swordmen increased to {user.swordmen}", 'swordmen': user.swordmen, 'gold': user.gold})
+                else:
+                    return Response({'message': f"{user.username}'s coin not enough"})
             except user.DoesNotExist:
                 return Response({'message': f'{user.username} does not exist'})
 
@@ -90,3 +93,12 @@ class SwordMenX(APIView):
                 return Response({'message': f"{user.username}'s swordmen increased to {user.swordmen}", 'swordmen': user.swordmen})
             except user.DoesNotExist:
                 return Response({'message': f'{user.username} does not exist'})
+
+class GetInfo(APIView):
+    permission_classes = (IsAuthenticated, )
+    
+    def get(self, request):
+        if request.method == 'GET':
+            user = request.user
+            return Response({'username': user.username, 'email': user.email, 'gold': user.gold, 'swordmen': user.swordmen})
+

@@ -1,10 +1,10 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
-
-from .views import UserRegistration, LogoutAPIView, Gold, SwordMen, GoldX, SwordMenX
+from .views import UserRegistration, LogoutAPIView, Gold, SwordMen, GoldX, SwordMenX, GetInfo
 
 urlpatterns = [
     path('login/', obtain_auth_token),
+    path('get-info/', GetInfo.as_view()),
     path('logout/', LogoutAPIView.as_view()),
     path('register/', UserRegistration.as_view()),
     path('gold_get/', Gold.as_view()),
