@@ -1,12 +1,12 @@
 # Nitavian
 
 Backend:
-
+</br>
 *change directory to backend folder*:
     `cd backend`
-
+</br>
 *create a venv (python and pip needs to be installed)*:
-    `pip install virtualenv`, `virtualenv venv`
+    `pip install virtualenv`, `virtualenv venv`</br>
 activate it: 
     `.\venv\scripts\activate`
 
